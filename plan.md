@@ -12,8 +12,8 @@
 | Phase | Module / Feature Focus | Status | Git Milestone | Deployed / Verified |
 | :---: | :--- | :---: | :--- | :---: |
 | **0** | Project & Environment Inspection | ✅ **Completed** | — | Verified clean state |
-| **1** | Project Scaffolding & Visual Shell | ⏳ **Pending** | `feat: phase 1 - scaffolding & layout` | Localhost |
-| **2** | Supabase Client & Env Validation | ⏳ **Pending** | `feat: phase 2 - supabase client & env` | Localhost |
+| **1** | Project Scaffolding & Visual Shell | ✅ **Completed** | `feat: phase 1 - scaffolding & layout` | Localhost (Vite dev server) |
+| **2** | Supabase Client & Env Validation | ✅ **Completed** | `feat: phase 2 - supabase client & env` | Localhost (Vite dev server) |
 | **3** | Database Migrations, RLS & Seed SQL | ⏳ **Pending** | `feat: phase 3 - database migrations & rls` | Supabase SQL Editor |
 | **4** | Authentication, Profiles & Role Lifecycle | ⏳ **Pending** | `feat: phase 4 - auth & role guards` | Localhost / Supabase |
 | **5** | Lead Management & Status Workflow | ⏳ **Pending** | `feat: phase 5 - lead management` | Localhost / Supabase |
