@@ -8,6 +8,7 @@ import {
   GraduationCap, 
   X 
 } from 'lucide-react';
+import { useAuth } from '../../features/auth/AuthContext';
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -15,7 +16,18 @@ interface MobileNavProps {
 }
 
 export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
+  const { profile, role, user } = useAuth();
+
   if (!isOpen) return null;
+
+  const getInitials = (name?: string) => {
+    if (!name) return 'BP';
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+  };
+
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Staff Member';
 
   return (
     <div className="mobile-drawer-overlay" onClick={onClose}>
@@ -79,10 +91,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
         </nav>
 
         <div className="sidebar-footer">
-          <div className="user-avatar-badge">BP</div>
+          <div className="user-avatar-badge">{getInitials(displayName)}</div>
           <div className="user-info">
-            <span className="user-name">Staff Counsellor</span>
-            <span className="user-role-tag">Demo Access</span>
+            <span className="user-name">{displayName}</span>
+            <span className="user-role-tag" style={{ textTransform: 'capitalize' }}>{role}</span>
           </div>
         </div>
       </div>

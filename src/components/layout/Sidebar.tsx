@@ -7,8 +7,20 @@ import {
   Settings, 
   GraduationCap
 } from 'lucide-react';
+import { useAuth } from '../../features/auth/AuthContext';
 
 export const Sidebar: React.FC = () => {
+  const { profile, role, user } = useAuth();
+
+  const getInitials = (name?: string) => {
+    if (!name) return 'BP';
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+  };
+
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Staff Member';
+
   return (
     <aside className="desktop-sidebar">
       {/* Brand Header */}
@@ -61,11 +73,13 @@ export const Sidebar: React.FC = () => {
       {/* Footer Profile Pill */}
       <div className="sidebar-footer">
         <div className="user-avatar-badge">
-          BP
+          {getInitials(displayName)}
         </div>
         <div className="user-info">
-          <span className="user-name">Staff Counsellor</span>
-          <span className="user-role-tag">Demo Access</span>
+          <span className="user-name" title={displayName}>{displayName}</span>
+          <span className="user-role-tag" style={{ textTransform: 'capitalize' }}>
+            {role}
+          </span>
         </div>
       </div>
     </aside>

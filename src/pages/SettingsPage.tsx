@@ -3,12 +3,19 @@ import {
   Database, 
   User, 
   CheckCircle2, 
-  AlertTriangle
+  AlertTriangle,
+  Mail,
+  Fingerprint,
+  Shield
 } from 'lucide-react';
 import { checkSupabaseConfig } from '../lib/supabaseClient';
+import { useAuth } from '../features/auth/AuthContext';
 
 export const SettingsPage: React.FC = () => {
   const config = checkSupabaseConfig();
+  const { user, profile, role } = useAuth();
+
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Staff Member';
 
   return (
     <div className="animate-fade-in-up">
@@ -16,7 +23,7 @@ export const SettingsPage: React.FC = () => {
       <div style={{ marginBottom: '1.75rem' }}>
         <h1 style={{ fontSize: '1.75rem', marginBottom: '0.35rem' }}>System & Account Settings</h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-          Inspect environment configuration, authentication roles, and database connection status.
+          Inspect environment configuration, active session, and database connection status.
         </p>
       </div>
 
@@ -42,33 +49,68 @@ export const SettingsPage: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div>
               <label style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Full Name</label>
-              <div style={{ fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem' }}>Staff Counsellor</div>
+              <div style={{ fontSize: '1rem', fontWeight: 600, marginTop: '0.2rem', color: 'var(--text-main)' }}>
+                {displayName}
+              </div>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Account Email</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', fontSize: '0.9rem', color: 'var(--text-main)', marginTop: '0.2rem' }}>
+                <Mail size={15} color="var(--text-subtle)" />
+                <span>{user?.email || 'Authenticated User'}</span>
+              </div>
             </div>
 
             <div>
               <label style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Assigned Role</label>
               <div style={{ marginTop: '0.25rem' }}>
                 <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
                   backgroundColor: '#eff6ff',
                   color: '#2563eb',
                   border: '1px solid #bfdbfe',
                   padding: '0.25rem 0.65rem',
                   borderRadius: '9999px',
                   fontSize: '0.8rem',
-                  fontWeight: 700
+                  fontWeight: 700,
+                  textTransform: 'capitalize'
                 }}>
-                  Counsellor (Default Least-Privilege)
+                  <Shield size={12} />
+                  {role} {role === 'counsellor' ? '(Default Least-Privilege)' : ''}
                 </span>
               </div>
             </div>
 
             <div>
-              <label style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Role Boundary</label>
-              <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                Protected by PostgreSQL Row Level Security. Role elevations require administrative SQL execution.
+              <label style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>User ID</label>
+              <div style={{ 
+                fontFamily: 'monospace', 
+                fontSize: '0.775rem', 
+                color: 'var(--text-muted)',
+                backgroundColor: 'var(--bg-canvas)',
+                padding: '0.35rem 0.6rem',
+                borderRadius: '6px',
+                marginTop: '0.25rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.375rem',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}>
+                <Fingerprint size={13} />
+                <span>{user?.id || 'Session Active'}</span>
+              </div>
+            </div>
+
+            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem' }}>
+              <p style={{ fontSize: '0.775rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
+                Role elevations require administrative SQL execution in Supabase. Client-side self-promotion is prevented by PostgreSQL RLS.
               </p>
             </div>
           </div>
