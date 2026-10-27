@@ -15,7 +15,7 @@
 | **1** | Project Scaffolding & Visual Shell | ✅ **Completed** | `feat: phase 1 - scaffolding & layout` | Localhost (Vite dev server) |
 | **2** | Supabase Client & Env Validation | ✅ **Completed** | `feat: phase 2 - supabase client & env` | Localhost (Vite dev server) |
 | **3** | Database Migrations, RLS & Seed SQL | ✅ **Completed** | `feat: phase 3 - database migrations & rls` | Supabase SQL Editor |
-| **4** | Authentication, Profiles & Role Lifecycle | ⏳ **Pending** | `feat: phase 4 - auth & role guards` | Localhost / Supabase |
+| **4** | Authentication, Profiles & Role Lifecycle | ✅ **Completed** | `feat: phase 4 - auth & role guards` | Localhost / Supabase |
 | **5** | Lead Management & Status Workflow | ⏳ **Pending** | `feat: phase 5 - lead management` | Localhost / Supabase |
 | **6** | Follow-Up Engine & Overdue Detection | ⏳ **Pending** | `feat: phase 6 - follow-ups & overdue` | Localhost / Supabase |
 | **7** | Activity History & Audit Trail | ⏳ **Pending** | `feat: phase 7 - activity history` | Localhost / Supabase |
